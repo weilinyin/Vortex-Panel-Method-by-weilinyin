@@ -1,6 +1,6 @@
 %计算主程序
 tic;
-alpha=9;
+alpha=5;
 s=1000;
 c=5;
 [cp,l,cl,x]=vortex_panel_method(0012,alpha,c,s,10);
