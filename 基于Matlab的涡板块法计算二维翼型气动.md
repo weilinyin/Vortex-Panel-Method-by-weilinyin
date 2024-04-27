@@ -51,7 +51,7 @@ $$
 $$
 
 $$
-\frac{\partial x}{\partial n_i}=-\sin\theta_i \tag{9}
+\frac{\partial y}{\partial n_i}=\cos\theta_i \tag{9}
 $$
 
 当$i=j$ 时，
@@ -129,28 +129,7 @@ $$
 
 实现了任意4,5,6位数NACA翼型在不同攻角、不同速度下压力系数$C_p$ 的分布与单位展长的升力$L'$ 、升力系数$c_l$ 的计算
 
-由于篇幅限制，这里仅给出main.m和vortex_panel_method.m
-
-#### main.m
-
-```matlab
-%计算主程序
-tic;
-alpha=[-8:15];
-s=1000;
-c=5;
-[cp,l,cl,x]=vortex_panel_method(2412,alpha,c,s,10);
-%plot(alpha,cl);
-
-[X,Y]=meshgrid(alpha,x);
-s=surf(X,Y,cp,'FaceAlpha',0.5);
-s.EdgeColor= 'none';
-
-
-toc;
-```
-
-#### vortex_panel_method.m
+由于篇幅限制，这里仅给出核心计算函数vortex_panel_method.m
 
 ```matlab
 %% 涡板块法计算函数
@@ -250,15 +229,15 @@ x=data(:,1)./c;
 end
 ```
 
-## 计算效果
+## 计算结果示例
 
 #### NACA2412在$-5^\circ < \alpha < 16^\circ$ 时升力系数$c_l$ 
 
-![$c_l$关于$\alpha$变化图](/cl-AoA.jpg "$c_l \alpha$")
+![图](images/cl-AoA.png "图片")
 
+#### NACA2412在$\alpha=5^\circ$时的$C_p$​分布
 
-
-
+![图2](images/cp-x.png)
 
 ## NVIDIA GPU加速计算
 
