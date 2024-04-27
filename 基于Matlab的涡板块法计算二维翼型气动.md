@@ -12,37 +12,37 @@
 
 设 $P(x,y)$为流场中一点，则该点由第$j$个面板诱导的速度势为
 $$
-\Delta \phi_{j}=-\frac{1}{2 \pi} \int_{j} \theta_{p j} \gamma_{j} d s_{j}
+\Delta \phi_ {j}=-\frac{1}{2 \pi} \int_ {j} \theta_ {p j} \gamma_ {j} d s_ {j}
 \tag{1}
 $$
 其中，$\gamma_i$在第$j$个面板上，为仅取决于$j$的常数，而
 $$
-\theta_{pj}=\arctan\frac{y-y_j}{x-x_j} \tag{2}
+\theta_ {pj}=\arctan\frac{y-y_ j}{x-x_ j} \tag{2}
 $$
 故，$P$点处由所有板块诱导的速度势为
 
 $$
-\phi(P)=-\sum_{j=1}^{n}\frac{\gamma_j}{2\pi}\int_j\theta_{pj}ds_j \tag{3}
+\phi(P)=-\sum_ {j=1}^{n}\frac{\gamma_ j}{2\pi}\int_ j\theta_ {pj}ds_ j \tag{3}
 $$
 将$P$置于第$i$个板块的控制点上，则
 
 $$
-\phi(x_i,y_i)=-\sum_{j=1}^n\frac{\gamma_j}{2\pi}\int_j\theta_{ij}ds_j \tag{4}
+\phi(x_ i,y_ i)=-\sum_{j=1}^n\frac{\gamma_ j}{2\pi}\int_ j\theta_ {ij}ds_ j \tag{4}
 $$
 板块上速度对板块的法向分量为$0$，故
 $$
-V_\infty\cos\beta_i-\sum_{j=1}^n\frac{\gamma_j}{2\pi}\int_j \frac{\partial\theta_{ij}}{\partial n_i}ds_j=0\\ 
-其中， \beta_i=\frac{\pi}{2}-(\alpha-\theta_i) \tag{5}
+V_ \infty\cos\beta_ i-\sum_ {j=1}^n\frac{\gamma_ j}{2\pi}\int_ j \frac{\partial\theta_ {ij}}{\partial n_ i}ds_ j=0\\ 
+其中， \beta_ i=\frac{\pi}{2}-(\alpha-\theta_ i) \tag{5}
 $$
 式(5)中用控制点近似替代板块，则有
 
 $$
-V_\infty\cos\beta_i-\sum_{j=1}^n\frac{\gamma_j s_j}{2\pi}\frac{\partial\theta_{ij}}{\partial n_i}=0 \tag{6}
+V_ \infty\cos\beta_ i-\sum_ {j=1}^n\frac{\gamma_ j s_ j}{2\pi}\frac{\partial\theta_ {ij}}{\partial n_ i}=0 \tag{6}
 $$
 由方向导数定义，有
 
 $$
-\frac{\partial \theta_{ij}}{\partial n_i}=\frac{1}{1+(\frac{y_i-y_j}{x_i-x_j})^2}\cdot[-\frac{y_i-y_j}{(x_i-x_j)^2}\frac{\partial x}{\partial n_i}+\frac{1}{x_i-x_j} \frac{\partial y}{\partial n_i}] \tag{7}
+\frac{\partial \theta_ {ij}}{\partial n_ i}=\frac{1}{1+(\frac{y_ i-y_ j}{x_ i-x_ j})^2}\cdot[-\frac{y_ i-y_ j}{(x_ i-x_ j)^2}\frac{\partial x}{\partial n_ i}+\frac{1}{x_ i-x_ j} \frac{\partial y}{\partial n_ i}] \tag{7}
 $$
 其中，
 
