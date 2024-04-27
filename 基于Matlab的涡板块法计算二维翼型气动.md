@@ -2,39 +2,39 @@
 
 ## 概述
 
-### 涡板块法(Vortex Panel Method)：
+### 涡板块法(Vortex Panel Method)
 
 涡板块法是一种用于计算流体力学问题的数值方法，主要应用于机翼的气动力学分析。这种方法通过在固体物体的表面离散分布一系列的涡线，并假设每个涡线产生的涡旋在固体表面产生的诱导速度与实际流体的速度相匹配，从而近似地模拟流体的流动。
 
 涡板块法的基本思想是将物体的表面分割成许多小板块，每个板块上分布有一个涡旋（涡线），这些涡旋在流场中产生诱导速度。根据库塔-儒科夫斯基定理，物体的升力可以通过计算物体表面涡旋所产生的诱导速度来求得。
 
-### 核心算法：
+## 核心算法
 
-设 P(x, y) 为流场中一点，则该点由第j个面板诱导的速度势为
+设 $P(x,y)$为流场中一点，则该点由第$j$个面板诱导的速度势为
 $$
 \Delta \phi_{j}=-\frac{1}{2 \pi} \int_{j} \theta_{p j} \gamma_{j} d s_{j}
 \tag{1}
 $$
-其中，在第j个面板上为仅取决于j的常数，而
+其中，$\gamma_i$在第$j$个面板上，为仅取决于$j$的常数，而
 $$
 \theta_{pj}=\arctan\frac{y-y_j}{x-x_j} \tag{2}
 $$
-故，P点处由所有板块诱导的速度势为
+故，$P$点处由所有板块诱导的速度势为
 
 $$
 \phi(P)=-\sum_{j=1}^{n}\frac{\gamma_j}{2\pi}\int_j\theta_{pj}ds_j \tag{3}
 $$
-将P置于第i个板块的控制点上，则
+将$P$置于第$i$个板块的控制点上，则
 
 $$
 \phi(x_i,y_i)=-\sum_{j=1}^n\frac{\gamma_j}{2\pi}\int_j\theta_{ij}ds_j \tag{4}
 $$
-板块上速度对板块的法向分量为0，故
+板块上速度对板块的法向分量为$0$，故
 $$
 V_\infty\cos\beta_i-\sum_{j=1}^n\frac{\gamma_j}{2\pi}\int_j \frac{\partial\theta_{ij}}{\partial n_i}ds_j=0\\ 
 其中， \beta_i=\frac{\pi}{2}-(\alpha-\theta_i) \tag{5}
 $$
-上式中用控制点近似替代板块，则有
+式(5)中用控制点近似替代板块，则有
 
 $$
 V_\infty\cos\beta_i-\sum_{j=1}^n\frac{\gamma_j s_j}{2\pi}\frac{\partial\theta_{ij}}{\partial n_i}=0 \tag{6}
@@ -54,7 +54,7 @@ $$
 \frac{\partial x}{\partial n_i}=-\sin\theta_i \tag{9}
 $$
 
-当i=j时，
+当$i=j$ 时，
 
 $$
 \frac{\partial \theta_{ij}}{\partial n_i}=0 \tag{10}
