@@ -179,25 +179,24 @@ data(:,4)=atan((y(1:end-1)-y(2:end))./(x(1:end-1)-x(2:end)));
 %求出板块与x轴夹角
 
 J=zeros(2*s-1);
-%J矩阵预分配显存
+%J矩阵预分配内存
 
 x_con=(data(:,1))';
 y_con=(data(:,2))';
 %控制点x y坐标向量化
 
 J=(1+((data(:,2)-y_con)./(data(:,1)-x_con)).^2).^(-1).*(sin(data(:,4)).*(data(:,2)-y_con)./(data(:,1)-x_con).^2+cos(data(:,4)).*(data(:,1)-x_con).^(-1));
-%求出Jij
+%求出方向导数
 
 b=v.*cos(pi/2-(data(:,4)-(alpha.*pi./180))).*(2*pi);
 A=J.*(data(:,3))';
-
 A(isnan(A)) = 0;
-%方程组系数矩阵
+%构建方程组系数矩阵
 
 b(s,:)=0;
 A(s,:)=zeros(1,2*s-1);
 A(s,s:s+1)=[1,1];
-%库塔后缘条件，舍去第s个方程
+%库塔后缘条件，替代第s个方程
 
 gamma=A\b;
 %解出gamma
@@ -229,7 +228,7 @@ x=data(:,1)./c;
 end
 ```
 
-## 计算结果示例
+### 计算结果示例
 
 #### NACA2412在$-5^\circ < \alpha < 16^\circ$ 时升力系数$c_l$ 
 
