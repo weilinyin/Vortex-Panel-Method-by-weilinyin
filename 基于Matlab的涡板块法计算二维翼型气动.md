@@ -10,12 +10,12 @@
 
 ## 核心算法
 
-设 $P(x,y)$为流场中一点，则该点由第$j$个面板诱导的速度势为
+设 $P(x,y)$为流场中一点，则该点由第$j$​个面板诱导的速度势为
 $$
 \Delta \phi_ {j}=-\frac{1}{2 \pi} \int_ {j} \theta_ {p j} \gamma_ {j} d s_ {j}
 \tag{1}
 $$
-其中，$\gamma_i$在第$j$个面板上，为仅取决于$j$的常数，而
+其中，$\gamma_i$在第$j$个面板上，为仅取决于$j$​的常数，而
 $$
 \theta_ {pj}=\arctan\frac{y-y_ j}{x-x_ j} \tag{2}
 $$
@@ -95,7 +95,7 @@ V_\infty2\pi\cos\beta_1\\
 V_\infty2\pi\cos\beta_2\\
 \vdots\\
 V_\infty2\pi\cos\beta_{n-1}\\
-V_\infty2\pi\cos\beta_n
+0
 \end{matrix}
 \right]
 \\ \tag{12}
@@ -122,6 +122,141 @@ $$
 
 
 ## Matlab脚本实现
+
+### 源代码
+
+代码仓库：https://github.com/weilinyin/Vortex-Panel-Method-by-weilinyin
+
+实现了任意4,5,6位数NACA翼型在不同攻角、不同速度下压力系数$C_p$ 的分布与单位展长的升力$L'$ 、升力系数$c_l$ 的计算
+
+由于篇幅限制，这里仅给出main.m和vortex_panel_method.m
+
+#### main.m
+
+```matlab
+%计算主程序
+tic;
+alpha=[-8:15];
+s=1000;
+c=5;
+[cp,l,cl,x]=vortex_panel_method(2412,alpha,c,s,10);
+%plot(alpha,cl);
+
+[X,Y]=meshgrid(alpha,x);
+s=surf(X,Y,cp,'FaceAlpha',0.5);
+s.EdgeColor= 'none';
+
+
+toc;
+```
+
+#### vortex_panel_method.m
+
+```matlab
+%% 涡板块法计算函数
+%输出数据
+%cp 压强系数
+%l  升力
+%cl 升力系数
+%m  力矩
+%cm 力矩系数
+%输入数据
+%n  翼型号（4 5 6位）
+%alpha 攻角（°）,支持数组
+%c  弦长(m)
+%s  板块数的一半
+%v  来流速度
+function[cp,l,cl,x]=vortex_panel_method(n,alpha,c,s,v)
+
+[x_u, x_l, y_u, y_l]=naca(n,0,c,s+1,1,1);  
+%构建几何形状
+
+x_l=(fliplr(x_l))';
+y_l=(fliplr(y_l))';
+%下翼面坐标顺序倒置
+
+x=[x_u'; x_l(2:end-1)];
+y=[y_u'; y_l(2:end-1)];
+%几何点数据合并
+
+
+
+data=zeros(2*s-1,4);
+%   预分配内存
+%   x 控制点x坐标 1
+%   y 控制点y坐标 2
+%   length of panel 3
+%   theta (rad) 板块与x轴夹角 4
+%   每行为一个板块的数据
+
+data(:,1)=(x(1:end-1)+x(2:end))./2;
+data(:,2)=(y(1:end-1)+y(2:end))./2;
+%根据翼型几何数据求出涡板块控制点坐标
+
+data(:,3)=sqrt((x(1:end-1)-x(2:end)).^2+(y(1:end-1)-y(2:end)).^2);
+%求出板块长度
+
+data(:,4)=atan((y(1:end-1)-y(2:end))./(x(1:end-1)-x(2:end)));
+%求出板块与x轴夹角
+
+J=zeros(2*s-1);
+%J矩阵预分配显存
+
+x_con=(data(:,1))';
+y_con=(data(:,2))';
+%控制点x y坐标向量化
+
+J=(1+((data(:,2)-y_con)./(data(:,1)-x_con)).^2).^(-1).*(sin(data(:,4)).*(data(:,2)-y_con)./(data(:,1)-x_con).^2+cos(data(:,4)).*(data(:,1)-x_con).^(-1));
+%求出Jij
+
+b=v.*cos(pi/2-(data(:,4)-(alpha.*pi./180))).*(2*pi);
+A=J.*(data(:,3))';
+
+A(isnan(A)) = 0;
+%方程组系数矩阵
+
+b(s,:)=0;
+A(s,:)=zeros(1,2*s-1);
+A(s,s:s+1)=[1,1];
+%库塔后缘条件，舍去第s个方程
+
+gamma=A\b;
+%解出gamma
+
+Gamma=zeros(2*s-1,size(alpha,2));
+Gamma(1:end-1,:)=(gamma(1:end-1,:)+gamma(2:end,:))./2;
+Gamma(end,:)=(gamma(end,:)+gamma(1,:))./2;
+%去除噪声
+
+l=-1.23*v*sum(gamma.*data(:,3));
+%升力
+
+cl=2*l/(1.23*v^2*c);
+%升力系数
+
+cp=1-(Gamma./v).^2;
+for j=1:size(alpha,2)
+    for i=2:(2*s-1)
+        if abs(cp(i,j))>3
+            cp(i,j)=cp(i-1,j);
+        end
+    end
+end
+%压力系数，抑制尖峰
+
+x=data(:,1)./c;
+%输出x/c
+
+end
+```
+
+## 计算效果
+
+#### NACA2412在$-5^\circ < \alpha < 16^\circ$ 时升力系数$c_l$ 
+
+![$c_l$关于$\alpha$变化图](/cl-AoA.jpg "$c_l \alpha$")
+
+
 
 
 
