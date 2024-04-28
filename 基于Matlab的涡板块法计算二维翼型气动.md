@@ -232,7 +232,7 @@ end
 
 #### NACA2412在$-5^\circ < \alpha < 16^\circ$ 时升力系数$c_l$ 
 
-![图](images/cl-AoA.png "图片")
+![图1](images/cl-AoA.png "图片")
 
 #### NACA2412在$\alpha=5^\circ$时的$C_p$​分布
 
@@ -240,4 +240,63 @@ end
 
 ## NVIDIA GPU加速计算
 
+### CPU计算的局限性
+
+当板块数量较大时，计算一个算例的时间较长
+
+![图3](images/time_1.png "n=20000时")
+
+然而，GPU由于其并行计算的架构，在解决矩阵相关问题时具有天然的优势，因此这里给出一个简单利用NVIDIA GPU对求解过程进行加速的示例
+
+### NVIDIA GPU求解示例
+
+#### 硬件要求
+
+Matlab中对GPU进行调用依赖NVIDIA CUDA，可使用
+
+```matlab
+gpuDevice
+```
+
+或者
+
+```cmd
+nvcc --version
+```
+
+来查看当前GPU是否支持
+
+#### 简单调用GPU的方法
+
+```matlab
+A_gpu=gpuArray(A);%将数组存入显存中，其后续运算将全部由GPU承担
+...%GPU计算
+A=gather(A_gpu);%将数组转入内存
+```
+
+#### 求解速度比较
+
+##### 使用设备
+
+> CPU: Intel Core i9-13900KF
+>
+> GPU: NVIDIA Geforce RTX 4090
+>
+> CUDA 12.3
+
+##### n=10000时
+
+###### CPU
+
+![图4](images/time_1.png "CPU")
+
+###### GPU
+
+![图5](images/time_2.png "GPU")
+
+不难发现，在相同板块数下，GPU的求解速度要比CPU高约1倍。
+
+然而GPU也有其局限性，在板块数更大的情况下，GPU容易显存不足
+
 ## 总结
+
