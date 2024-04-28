@@ -32,7 +32,7 @@ $$
 板块上速度对板块的法向分量为$0$，故
 $$
 V_ \infty\cos\beta_ i-\sum_ {j=1}^n\frac{\gamma_ j}{2\pi}\int_ j \frac{\partial\theta_ {ij}}{\partial n_ i}ds_ j=0\\ 
-其中， \beta_ i=\frac{\pi}{2}-(\alpha-\theta_ i) \tag{5}
+其中， \beta_ i=\frac{\pi}{2}-(\theta_i - \alpha) \tag{5}
 $$
 式(5)中用控制点近似替代板块，则有
 
