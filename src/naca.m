@@ -167,7 +167,7 @@ x_i=(x+y_t.*sin(theta))*c;  % X intrados coordinate
 y_e=(y_c+y_t.*cos(theta))*c;    % Y extrados coordinate
 y_i=(y_c-y_t.*cos(theta))*c;    % Y intrados coordinate
 %----------------------- NACA PLOT ----------------------------------------
-%{
+
 ep=plot(x_e,y_e,'b');  % Extrados plot
 hold;   % Hold current plot without erasing it
 plot(x_i,y_i,'b');  % Intrados plot
@@ -187,5 +187,5 @@ else
 end
 xlabel('X (m)');    % Label of x axis
 ylabel('Y (m)');    % Label of y axis
-%}
+
 end

@@ -75,14 +75,7 @@ cl=2*l/(1.23*v^2*c);
 %升力系数
 
 cp=gather(1-(Gamma./v).^2);
-for j=1:size(alpha,2)
-    for i=2:(2*s-1)
-        if abs(cp(i,j))>3
-            cp(i,j)=cp(i-1,j);
-        end
-    end
-end
-%压力系数，抑制尖峰
+%压力系数
 
 x=gather(data(:,1)./c);
 %输出x/c
