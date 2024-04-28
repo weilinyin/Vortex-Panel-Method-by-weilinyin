@@ -3,13 +3,12 @@
 %cp 压强系数
 %l  升力
 %cl 升力系数
-%m  力矩
-%cm 力矩系数
+%x  x/c
 %输入数据
 %n  翼型号（4 5 6位）
 %alpha 攻角（°）,支持数组
 %c  弦长(m)
-%s  板块数的一半
+%s  上、下翼面板块数
 %v  来流速度
 function[cp,l,cl,x]=vortex_panel_method(n,alpha,c,s,v)
 
