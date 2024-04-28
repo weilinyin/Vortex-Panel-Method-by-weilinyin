@@ -6,7 +6,7 @@ alpha=[5,6];%攻角 °
 s=1000;%上、下翼面的板块数量
 c=5;%弦长 m
 v=10;%速度 m/s
-isgpu=1;%是否使用gpu求解
+isgpu=0;%是否使用gpu求解
 if isgpu == 1
     [cp,l,cl,x]=vortex_panel_method_gpu(n,alpha,c,s,v);
 else
